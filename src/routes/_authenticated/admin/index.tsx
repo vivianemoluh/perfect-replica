@@ -25,7 +25,7 @@ type EqFilter = { column: string; value: unknown };
 
 async function countRows(table: string, filter?: EqFilter) {
   let query = supabase.from(table as never).select("*", { count: "exact", head: true });
-  if (filter) query = query.eq(filter.column, filter.value);
+  if (filter) query = query.eq(filter.column as never, filter.value as never);
   const { count, error } = await query;
   if (error) throw error;
   return count ?? 0;
