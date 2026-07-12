@@ -21,9 +21,11 @@ function StatCard({ label, value, badge }: { label: string; value: number | stri
   );
 }
 
-async function countRows(table: string, filter?: (q: ReturnType<typeof supabase.from>) => unknown) {
+type EqFilter = { column: string; value: unknown };
+
+async function countRows(table: string, filter?: EqFilter) {
   let query = supabase.from(table as never).select("*", { count: "exact", head: true });
-  if (filter) query = filter(query) as typeof query;
+  if (filter) query = query.eq(filter.column, filter.value);
   const { count, error } = await query;
   if (error) throw error;
   return count ?? 0;
@@ -38,17 +40,18 @@ function Dashboard() {
     queryFn: async () => {
       const [books, articles, events, gallery, messages, unread, subscribers, reviews] = await Promise.all([
         countRows("books"),
-        countRows("articles", (q) => (q as { eq: (c: string, v: unknown) => unknown }).eq("is_published", true)),
+        countRows("articles", { column: "is_published", value: true }),
         countRows("events"),
         countRows("gallery"),
         countRows("contact_messages"),
-        countRows("contact_messages", (q) => (q as { eq: (c: string, v: unknown) => unknown }).eq("is_read", false)),
+        countRows("contact_messages", { column: "is_read", value: false }),
         countRows("newsletter_subscribers"),
         countRows("reviews"),
       ]);
       return { books, articles, events, gallery, messages, unread, subscribers, reviews };
     },
   });
+
 
   return (
     <div>
