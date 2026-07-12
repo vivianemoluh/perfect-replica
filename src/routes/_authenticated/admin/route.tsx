@@ -1,9 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { checkCurrentUserAdmin } from "@/lib/admin-auth.functions";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 
@@ -24,35 +22,47 @@ const LINKS: Array<{ to: string; label: string }> = [
   { to: "/admin/subscribers", label: "Abonnés" },
 ];
 
+// Direct role check against user_roles (no dependency on the has_role() RPC).
+async function checkAdmin() {
+  // Wait for the session to be fully hydrated to avoid race conditions.
+  let session = null;
+  for (let attempt = 0; attempt < 12; attempt += 1) {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      session = data.session;
+      break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 150));
+  }
+  if (!session) throw new Error("Session admin pas encore chargée");
+
+  // Minimum 1s loading window before we trust the result of the role check.
+  const [{ data, error }] = await Promise.all([
+    supabase.from("user_roles").select("role").eq("user_id", session.user.id),
+    new Promise((resolve) => setTimeout(resolve, 1000)),
+  ]);
+  if (error) throw error;
+
+  const isAdmin = (data ?? []).some((r) => r.role === "admin");
+  console.log("[admin] user_roles check", { userId: session.user.id, isAdmin, roles: data });
+  return { userId: session.user.id, isAdmin };
+}
+
 function AdminLayout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const checkAdmin = useServerFn(checkCurrentUserAdmin);
+
   const adminCheck = useQuery({
     queryKey: ["admin-role-check"],
-    retry: 2,
-    retryDelay: 350,
-    queryFn: async () => {
-      let sessionReady = false;
-      for (let attempt = 0; attempt < 10; attempt += 1) {
-        const { data } = await supabase.auth.getSession();
-        if (data.session) {
-          sessionReady = true;
-          break;
-        }
-        await new Promise((resolve) => setTimeout(resolve, 150));
-      }
-      if (!sessionReady) throw new Error("Session admin pas encore chargée");
-      const result = await checkAdmin();
-      console.log("[admin] has_role() result after login", result);
-      return result;
-    },
+    retry: 1,
+    retryDelay: 400,
+    queryFn: checkAdmin,
   });
 
+  // Only redirect AFTER the role check has fully completed.
   useEffect(() => {
     if (!adminCheck.data || adminCheck.data.isAdmin) return;
-    console.warn("[admin] has_role() confirmed non-admin", adminCheck.data);
     void supabase.auth.signOut().finally(() => {
       navigate({ to: "/auth", search: { error: "not_admin" } as never, replace: true });
     });
@@ -76,12 +86,11 @@ function AdminLayout() {
   }
 
   if (adminCheck.isError) {
-    console.error("[admin] role check failed", adminCheck.error);
     return (
       <div className="mx-auto flex min-h-[55vh] max-w-md flex-col items-center justify-center px-4 text-center">
         <h1 className="font-display text-2xl text-primary">Vérification admin impossible</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          La session est chargée, mais la vérification du rôle admin a échoué. Consultez la console pour le résultat de has_role().
+          La session est chargée, mais la vérification du rôle admin a échoué.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <Button onClick={() => adminCheck.refetch()}>Réessayer</Button>
