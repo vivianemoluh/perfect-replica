@@ -39,7 +39,7 @@ function ArticlePage() {
   const content = (lang === "en" ? data.content_en : data.content_fr) ?? data.content_fr;
   const date = data.published_at ?? data.created_at;
 
-  const url = typeof window !== "undefined" ? window.location.href : "";
+  
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
