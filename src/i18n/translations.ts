@@ -281,6 +281,17 @@ export const resources = {
         newsletterBody:
           "Rare, carefully written letters: new releases, events, and exclusive writing.",
       },
+      biblio: {
+        title: "Bibliography",
+        intro: "Published and forthcoming works by Viviane Moluh Peyou.",
+        items: [
+          "Forthcoming: VIVIANE MOLUH PEYOU, l'acharnement du destin, 2026 literary season.",
+          "LES CHOIX DE L'OMBRE, Senegal: MASQUE ET CHORIS 2021.",
+          "POURE, LE MOUTON NOIR DES NJOYA, DOUALA: AFRIC AVENIR INTERNATIONALE.",
+          "LATINITAS 6e/5e, YAOUNDE: ECLOSION 2024.",
+          "LATINITAS 4e/3e, YAOUNDE: ECLOSION 2024.",
+        ],
+      },
       bio: {
         title: "Biography",
         kicker: "About the author",
