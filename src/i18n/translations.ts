@@ -50,6 +50,8 @@ export const resources = {
       },
       home: {
         heroIntro: "Écrivaine • Romancière • Inspecteur Régional de Pédagogie",
+        heroBio:
+          "Viviane Moluh Peyou est une écrivaine camerounaise, d'expression originaire de KOUPA-MENKE dans le Noun. Française, Enseignante de formation, elle occupe depuis le poste d'inspecteur régionale de pédagogie a Yaoundé. elle signe une écriture engagée et....",
         heroCta: "Découvrir mes livres",
         heroCtaSecondary: "Lire mes chroniques",
         introTitle: "Donner une voix aux silences",
