@@ -19,6 +19,7 @@ import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChroniquesRouteImport } from './routes/chroniques'
 import { Route as BiographieRouteImport } from './routes/biographie'
+import { Route as BibliographieRouteImport } from './routes/bibliographie'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
@@ -85,6 +86,11 @@ const ChroniquesRoute = ChroniquesRouteImport.update({
 const BiographieRoute = BiographieRouteImport.update({
   id: '/biographie',
   path: '/biographie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BibliographieRoute = BibliographieRouteImport.update({
+  id: '/bibliographie',
+  path: '/bibliographie',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
   '/auth': typeof AuthRoute
+  '/bibliographie': typeof BibliographieRoute
   '/biographie': typeof BiographieRoute
   '/chroniques': typeof ChroniquesRouteWithChildren
   '/contact': typeof ContactRoute
@@ -205,6 +212,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agenda': typeof AgendaRoute
   '/auth': typeof AuthRoute
+  '/bibliographie': typeof BibliographieRoute
   '/biographie': typeof BiographieRoute
   '/chroniques': typeof ChroniquesRouteWithChildren
   '/contact': typeof ContactRoute
@@ -233,6 +241,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/agenda': typeof AgendaRoute
   '/auth': typeof AuthRoute
+  '/bibliographie': typeof BibliographieRoute
   '/biographie': typeof BiographieRoute
   '/chroniques': typeof ChroniquesRouteWithChildren
   '/contact': typeof ContactRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/'
     | '/agenda'
     | '/auth'
+    | '/bibliographie'
     | '/biographie'
     | '/chroniques'
     | '/contact'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/'
     | '/agenda'
     | '/auth'
+    | '/bibliographie'
     | '/biographie'
     | '/chroniques'
     | '/contact'
@@ -316,6 +327,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/agenda'
     | '/auth'
+    | '/bibliographie'
     | '/biographie'
     | '/chroniques'
     | '/contact'
@@ -345,6 +357,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AgendaRoute: typeof AgendaRoute
   AuthRoute: typeof AuthRoute
+  BibliographieRoute: typeof BibliographieRoute
   BiographieRoute: typeof BiographieRoute
   ChroniquesRoute: typeof ChroniquesRouteWithChildren
   ContactRoute: typeof ContactRoute
@@ -427,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/biographie'
       fullPath: '/biographie'
       preLoaderRoute: typeof BiographieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bibliographie': {
+      id: '/bibliographie'
+      path: '/bibliographie'
+      fullPath: '/bibliographie'
+      preLoaderRoute: typeof BibliographieRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -613,6 +633,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AgendaRoute: AgendaRoute,
   AuthRoute: AuthRoute,
+  BibliographieRoute: BibliographieRoute,
   BiographieRoute: BiographieRoute,
   ChroniquesRoute: ChroniquesRouteWithChildren,
   ContactRoute: ContactRoute,
@@ -627,3 +648,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
