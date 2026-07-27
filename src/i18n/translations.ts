@@ -269,6 +269,8 @@ export const resources = {
       },
       home: {
         heroIntro: "Writer • Novelist • Regional Pedagogical Inspector",
+        heroBio:
+          "Viviane Moluh Peyou is a Cameroonian writer from KOUPA-MENKE in the Noun. A French-language author and teacher by training, she is Regional Pedagogical Inspector in Yaoundé, and writes engaged literature.",
         heroCta: "Discover my books",
         heroCtaSecondary: "Read my chronicles",
         introTitle: "Giving voice to silences",
