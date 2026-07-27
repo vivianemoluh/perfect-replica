@@ -66,6 +66,19 @@ export const resources = {
           "Lettres rares, écrites avec soin : annonces de parutions, événements et réflexions inédites.",
       },
 
+      biblio: {
+        title: "Bibliographie",
+        intro: "Les œuvres publiées et à paraître de Viviane Moluh Peyou.",
+        items: [
+          "A paraitre : VIVIANE MOLUH PEYOU, l'acharnement du destin, rentree litteraire 2026.",
+          "LES CHOIX DE L'OMBRE, Senegal : MASQUE ET CHORIS 2021.",
+          "POURE, LE MOUTON NOIR DES NJOYA, DOUALA : AFRIC AVENIR INTERNATIONALE.",
+          "LATINITAS 6e/5e, YAOUNDE : ECLOSION 2024.",
+          "LATINITAS 4e/3e, YAOUNDE : ECLOSION 2024.",
+        ],
+      },
+
+
       bio: {
         title: "Biographie",
         kicker: "À propos de l'auteure",
