@@ -229,6 +229,7 @@ export const resources = {
       nav: {
         home: "Home",
         biography: "Biography",
+        bibliography: "Bibliography",
         books: "My Books",
         chronicles: "Chronicles",
         agenda: "Events",
