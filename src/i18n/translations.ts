@@ -10,6 +10,7 @@ export const resources = {
       nav: {
         home: "Accueil",
         biography: "Biographie",
+        bibliography: "Bibliographie",
         books: "Mes livres",
         chronicles: "Chroniques",
         agenda: "Agenda",
