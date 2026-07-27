@@ -103,7 +103,7 @@ function HomePage() {
               « {t("meta.tagline")} »
             </p>
             <p className="mt-6 max-w-xl text-base text-foreground/80">
-              {t("home.introBody")}
+              {t("home.heroBio")}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link

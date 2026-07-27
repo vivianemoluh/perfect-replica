@@ -10,6 +10,7 @@ export const resources = {
       nav: {
         home: "Accueil",
         biography: "Biographie",
+        bibliography: "Bibliographie",
         books: "Mes livres",
         chronicles: "Chroniques",
         agenda: "Agenda",
@@ -49,6 +50,8 @@ export const resources = {
       },
       home: {
         heroIntro: "Écrivaine • Romancière • Inspecteur Régional de Pédagogie",
+        heroBio:
+          "Viviane Moluh Peyou est une écrivaine camerounaise, d'expression originaire de KOUPA-MENKE dans le Noun. Française, Enseignante de formation, elle occupe depuis le poste d'inspecteur régionale de pédagogie a Yaoundé. elle signe une écriture engagée et....",
         heroCta: "Découvrir mes livres",
         heroCtaSecondary: "Lire mes chroniques",
         introTitle: "Donner une voix aux silences",
@@ -62,6 +65,19 @@ export const resources = {
         newsletterBody:
           "Lettres rares, écrites avec soin : annonces de parutions, événements et réflexions inédites.",
       },
+
+      biblio: {
+        title: "Bibliographie",
+        intro: "Les œuvres publiées et à paraître de Viviane Moluh Peyou.",
+        items: [
+          "A paraitre : VIVIANE MOLUH PEYOU, l'acharnement du destin, rentree litteraire 2026.",
+          "LES CHOIX DE L'OMBRE, Senegal : MASQUE ET CHORIS 2021.",
+          "POURE, LE MOUTON NOIR DES NJOYA, DOUALA : AFRIC AVENIR INTERNATIONALE.",
+          "LATINITAS 6e/5e, YAOUNDE : ECLOSION 2024.",
+          "LATINITAS 4e/3e, YAOUNDE : ECLOSION 2024.",
+        ],
+      },
+
 
       bio: {
         title: "Biographie",
@@ -213,6 +229,7 @@ export const resources = {
       nav: {
         home: "Home",
         biography: "Biography",
+        bibliography: "Bibliography",
         books: "My Books",
         chronicles: "Chronicles",
         agenda: "Events",
@@ -252,6 +269,8 @@ export const resources = {
       },
       home: {
         heroIntro: "Writer • Novelist • Regional Pedagogical Inspector",
+        heroBio:
+          "Viviane Moluh Peyou is a Cameroonian writer from KOUPA-MENKE in the Noun. A French-language author and teacher by training, she is Regional Pedagogical Inspector in Yaoundé, and writes engaged literature.",
         heroCta: "Discover my books",
         heroCtaSecondary: "Read my chronicles",
         introTitle: "Giving voice to silences",
@@ -264,6 +283,17 @@ export const resources = {
         newsletterTitle: "Stay in touch",
         newsletterBody:
           "Rare, carefully written letters: new releases, events, and exclusive writing.",
+      },
+      biblio: {
+        title: "Bibliography",
+        intro: "Published and forthcoming works by Viviane Moluh Peyou.",
+        items: [
+          "Forthcoming: VIVIANE MOLUH PEYOU, l'acharnement du destin, 2026 literary season.",
+          "LES CHOIX DE L'OMBRE, Senegal: MASQUE ET CHORIS 2021.",
+          "POURE, LE MOUTON NOIR DES NJOYA, DOUALA: AFRIC AVENIR INTERNATIONALE.",
+          "LATINITAS 6e/5e, YAOUNDE: ECLOSION 2024.",
+          "LATINITAS 4e/3e, YAOUNDE: ECLOSION 2024.",
+        ],
       },
       bio: {
         title: "Biography",

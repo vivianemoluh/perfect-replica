@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 const NAV_LINKS: Array<{ to: string; key: string }> = [
   { to: "/", key: "nav.home" },
   { to: "/biographie", key: "nav.biography" },
+  { to: "/bibliographie", key: "nav.bibliography" },
   { to: "/livres", key: "nav.books" },
   { to: "/chroniques", key: "nav.chronicles" },
   { to: "/agenda", key: "nav.agenda" },
