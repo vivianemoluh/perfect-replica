@@ -113,14 +113,14 @@ const ChroniquesIndexRoute = ChroniquesIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const LivresSlugRoute = LivresSlugRouteImport.update({
-  id: '/livres/$slug',
-  path: '/livres/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LivresRoute,
 } as any)
 const ChroniquesSlugRoute = ChroniquesSlugRouteImport.update({
-  id: '/chroniques/$slug',
-  path: '/chroniques/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ChroniquesRoute,
 } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   id: '/admin',
@@ -366,8 +366,6 @@ export interface RootRouteChildren {
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   RessourcesRoute: typeof RessourcesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  ChroniquesSlugRoute: typeof ChroniquesSlugRoute
-  LivresSlugRoute: typeof LivresSlugRoute
   ChroniquesIndexRoute: typeof ChroniquesIndexRoute
   LivresIndexRoute: typeof LivresIndexRoute
 }
@@ -481,17 +479,17 @@ declare module '@tanstack/react-router' {
     }
     '/livres/$slug': {
       id: '/livres/$slug'
-      path: '/livres/$slug'
+      path: '/$slug'
       fullPath: '/livres/$slug'
       preLoaderRoute: typeof LivresSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof LivresRoute
     }
     '/chroniques/$slug': {
       id: '/chroniques/$slug'
-      path: '/chroniques/$slug'
+      path: '/$slug'
       fullPath: '/chroniques/$slug'
       preLoaderRoute: typeof ChroniquesSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ChroniquesRoute
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -621,11 +619,19 @@ const rootRouteChildren: RootRouteChildren = {
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   RessourcesRoute: RessourcesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  ChroniquesSlugRoute: ChroniquesSlugRoute,
-  LivresSlugRoute: LivresSlugRoute,
   ChroniquesIndexRoute: ChroniquesIndexRoute,
   LivresIndexRoute: LivresIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
