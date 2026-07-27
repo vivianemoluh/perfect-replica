@@ -14,16 +14,16 @@ import { Route as RessourcesRouteImport } from './routes/ressources'
 import { Route as PolitiqueDeConfidentialiteRouteImport } from './routes/politique-de-confidentialite'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
-import { Route as LivresRouteImport } from './routes/livres'
 import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as ChroniquesRouteImport } from './routes/chroniques'
 import { Route as BiographieRouteImport } from './routes/biographie'
 import { Route as BibliographieRouteImport } from './routes/bibliographie'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LivresIndexRouteImport } from './routes/livres.index'
+import { Route as ChroniquesIndexRouteImport } from './routes/chroniques.index'
 import { Route as LivresSlugRouteImport } from './routes/livres.$slug'
 import { Route as ChroniquesSlugRouteImport } from './routes/chroniques.$slug'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
@@ -63,11 +63,6 @@ const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
   path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LivresRoute = LivresRouteImport.update({
-  id: '/livres',
-  path: '/livres',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GalerieRoute = GalerieRouteImport.update({
   id: '/galerie',
   path: '/galerie',
@@ -76,11 +71,6 @@ const GalerieRoute = GalerieRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ChroniquesRoute = ChroniquesRouteImport.update({
-  id: '/chroniques',
-  path: '/chroniques',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BiographieRoute = BiographieRouteImport.update({
@@ -112,15 +102,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LivresIndexRoute = LivresIndexRouteImport.update({
+  id: '/livres/',
+  path: '/livres/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChroniquesIndexRoute = ChroniquesIndexRouteImport.update({
+  id: '/chroniques/',
+  path: '/chroniques/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LivresSlugRoute = LivresSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => LivresRoute,
+  id: '/livres/$slug',
+  path: '/livres/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ChroniquesSlugRoute = ChroniquesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ChroniquesRoute,
+  id: '/chroniques/$slug',
+  path: '/chroniques/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   id: '/admin',
@@ -186,10 +186,8 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/bibliographie': typeof BibliographieRoute
   '/biographie': typeof BiographieRoute
-  '/chroniques': typeof ChroniquesRouteWithChildren
   '/contact': typeof ContactRoute
   '/galerie': typeof GalerieRoute
-  '/livres': typeof LivresRouteWithChildren
   '/mentions-legales': typeof MentionsLegalesRoute
   '/newsletter': typeof NewsletterRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -198,6 +196,8 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/chroniques/$slug': typeof ChroniquesSlugRoute
   '/livres/$slug': typeof LivresSlugRoute
+  '/chroniques/': typeof ChroniquesIndexRoute
+  '/livres/': typeof LivresIndexRoute
   '/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/admin/books': typeof AuthenticatedAdminBooksRoute
   '/admin/events': typeof AuthenticatedAdminEventsRoute
@@ -214,10 +214,8 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/bibliographie': typeof BibliographieRoute
   '/biographie': typeof BiographieRoute
-  '/chroniques': typeof ChroniquesRouteWithChildren
   '/contact': typeof ContactRoute
   '/galerie': typeof GalerieRoute
-  '/livres': typeof LivresRouteWithChildren
   '/mentions-legales': typeof MentionsLegalesRoute
   '/newsletter': typeof NewsletterRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -225,6 +223,8 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/chroniques/$slug': typeof ChroniquesSlugRoute
   '/livres/$slug': typeof LivresSlugRoute
+  '/chroniques': typeof ChroniquesIndexRoute
+  '/livres': typeof LivresIndexRoute
   '/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/admin/books': typeof AuthenticatedAdminBooksRoute
   '/admin/events': typeof AuthenticatedAdminEventsRoute
@@ -243,10 +243,8 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/bibliographie': typeof BibliographieRoute
   '/biographie': typeof BiographieRoute
-  '/chroniques': typeof ChroniquesRouteWithChildren
   '/contact': typeof ContactRoute
   '/galerie': typeof GalerieRoute
-  '/livres': typeof LivresRouteWithChildren
   '/mentions-legales': typeof MentionsLegalesRoute
   '/newsletter': typeof NewsletterRoute
   '/politique-de-confidentialite': typeof PolitiqueDeConfidentialiteRoute
@@ -255,6 +253,8 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/chroniques/$slug': typeof ChroniquesSlugRoute
   '/livres/$slug': typeof LivresSlugRoute
+  '/chroniques/': typeof ChroniquesIndexRoute
+  '/livres/': typeof LivresIndexRoute
   '/_authenticated/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/_authenticated/admin/books': typeof AuthenticatedAdminBooksRoute
   '/_authenticated/admin/events': typeof AuthenticatedAdminEventsRoute
@@ -273,10 +273,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bibliographie'
     | '/biographie'
-    | '/chroniques'
     | '/contact'
     | '/galerie'
-    | '/livres'
     | '/mentions-legales'
     | '/newsletter'
     | '/politique-de-confidentialite'
@@ -285,6 +283,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/chroniques/$slug'
     | '/livres/$slug'
+    | '/chroniques/'
+    | '/livres/'
     | '/admin/articles'
     | '/admin/books'
     | '/admin/events'
@@ -301,10 +301,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bibliographie'
     | '/biographie'
-    | '/chroniques'
     | '/contact'
     | '/galerie'
-    | '/livres'
     | '/mentions-legales'
     | '/newsletter'
     | '/politique-de-confidentialite'
@@ -312,6 +310,8 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/chroniques/$slug'
     | '/livres/$slug'
+    | '/chroniques'
+    | '/livres'
     | '/admin/articles'
     | '/admin/books'
     | '/admin/events'
@@ -329,10 +329,8 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bibliographie'
     | '/biographie'
-    | '/chroniques'
     | '/contact'
     | '/galerie'
-    | '/livres'
     | '/mentions-legales'
     | '/newsletter'
     | '/politique-de-confidentialite'
@@ -341,6 +339,8 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/chroniques/$slug'
     | '/livres/$slug'
+    | '/chroniques/'
+    | '/livres/'
     | '/_authenticated/admin/articles'
     | '/_authenticated/admin/books'
     | '/_authenticated/admin/events'
@@ -359,15 +359,17 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BibliographieRoute: typeof BibliographieRoute
   BiographieRoute: typeof BiographieRoute
-  ChroniquesRoute: typeof ChroniquesRouteWithChildren
   ContactRoute: typeof ContactRoute
   GalerieRoute: typeof GalerieRoute
-  LivresRoute: typeof LivresRouteWithChildren
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   NewsletterRoute: typeof NewsletterRoute
   PolitiqueDeConfidentialiteRoute: typeof PolitiqueDeConfidentialiteRoute
   RessourcesRoute: typeof RessourcesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ChroniquesSlugRoute: typeof ChroniquesSlugRoute
+  LivresSlugRoute: typeof LivresSlugRoute
+  ChroniquesIndexRoute: typeof ChroniquesIndexRoute
+  LivresIndexRoute: typeof LivresIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -407,13 +409,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/livres': {
-      id: '/livres'
-      path: '/livres'
-      fullPath: '/livres'
-      preLoaderRoute: typeof LivresRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/galerie': {
       id: '/galerie'
       path: '/galerie'
@@ -426,13 +421,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/chroniques': {
-      id: '/chroniques'
-      path: '/chroniques'
-      fullPath: '/chroniques'
-      preLoaderRoute: typeof ChroniquesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biographie': {
@@ -477,19 +465,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/livres/': {
+      id: '/livres/'
+      path: '/livres'
+      fullPath: '/livres/'
+      preLoaderRoute: typeof LivresIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chroniques/': {
+      id: '/chroniques/'
+      path: '/chroniques'
+      fullPath: '/chroniques/'
+      preLoaderRoute: typeof ChroniquesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/livres/$slug': {
       id: '/livres/$slug'
-      path: '/$slug'
+      path: '/livres/$slug'
       fullPath: '/livres/$slug'
       preLoaderRoute: typeof LivresSlugRouteImport
-      parentRoute: typeof LivresRoute
+      parentRoute: typeof rootRouteImport
     }
     '/chroniques/$slug': {
       id: '/chroniques/$slug'
-      path: '/$slug'
+      path: '/chroniques/$slug'
       fullPath: '/chroniques/$slug'
       preLoaderRoute: typeof ChroniquesSlugRouteImport
-      parentRoute: typeof ChroniquesRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -605,29 +607,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface ChroniquesRouteChildren {
-  ChroniquesSlugRoute: typeof ChroniquesSlugRoute
-}
-
-const ChroniquesRouteChildren: ChroniquesRouteChildren = {
-  ChroniquesSlugRoute: ChroniquesSlugRoute,
-}
-
-const ChroniquesRouteWithChildren = ChroniquesRoute._addFileChildren(
-  ChroniquesRouteChildren,
-)
-
-interface LivresRouteChildren {
-  LivresSlugRoute: typeof LivresSlugRoute
-}
-
-const LivresRouteChildren: LivresRouteChildren = {
-  LivresSlugRoute: LivresSlugRoute,
-}
-
-const LivresRouteWithChildren =
-  LivresRoute._addFileChildren(LivresRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -635,26 +614,18 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BibliographieRoute: BibliographieRoute,
   BiographieRoute: BiographieRoute,
-  ChroniquesRoute: ChroniquesRouteWithChildren,
   ContactRoute: ContactRoute,
   GalerieRoute: GalerieRoute,
-  LivresRoute: LivresRouteWithChildren,
   MentionsLegalesRoute: MentionsLegalesRoute,
   NewsletterRoute: NewsletterRoute,
   PolitiqueDeConfidentialiteRoute: PolitiqueDeConfidentialiteRoute,
   RessourcesRoute: RessourcesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ChroniquesSlugRoute: ChroniquesSlugRoute,
+  LivresSlugRoute: LivresSlugRoute,
+  ChroniquesIndexRoute: ChroniquesIndexRoute,
+  LivresIndexRoute: LivresIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -6,7 +6,7 @@ import type { Book } from "@/lib/types";
 import { PageHeader } from "@/components/site/PageHeader";
 import { BookCard } from "@/components/site/BookCard";
 
-export const Route = createFileRoute("/livres")({
+export const Route = createFileRoute("/livres/")({
   head: () => ({
     meta: [
       { title: "Mes livres — Viviane Moluh Peyou" },

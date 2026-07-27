@@ -7,7 +7,7 @@ import type { Article } from "@/lib/types";
 import { PageHeader } from "@/components/site/PageHeader";
 import { ChronicleCard } from "@/components/site/ChronicleCard";
 
-export const Route = createFileRoute("/chroniques")({
+export const Route = createFileRoute("/chroniques/")({
   head: () => ({
     meta: [
       { title: "Chroniques — Viviane Moluh Peyou" },
