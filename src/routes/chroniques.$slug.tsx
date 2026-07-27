@@ -39,7 +39,7 @@ function ArticlePage() {
   const content = (lang === "en" ? data.content_en : data.content_fr) ?? data.content_fr;
   const date = data.published_at ?? data.created_at;
 
-  const url = typeof window !== "undefined" ? window.location.href : "";
+  
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
@@ -62,15 +62,7 @@ function ArticlePage() {
         </div>
       )}
 
-      <div className="mt-12 border-t border-border pt-6">
-        <p className="text-sm font-medium text-foreground">{t("common.share")}</p>
-        <div className="mt-3 flex flex-wrap gap-2 text-sm">
-          <a className="rounded-md border border-border px-3 py-2 hover:border-primary" target="_blank" rel="noreferrer" href={`https://wa.me/?text=${encodeURIComponent(title + " " + url)}`}>WhatsApp</a>
-          <a className="rounded-md border border-border px-3 py-2 hover:border-primary" target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}>Facebook</a>
-          <a className="rounded-md border border-border px-3 py-2 hover:border-primary" target="_blank" rel="noreferrer" href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}>Twitter / X</a>
-          <a className="rounded-md border border-border px-3 py-2 hover:border-primary" target="_blank" rel="noreferrer" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}>LinkedIn</a>
-        </div>
-      </div>
+
 
       <aside className="mt-12 rounded-lg border border-border/70 bg-card/60 p-6">
         <p className="font-quote text-xs uppercase tracking-[0.3em] text-gold">{t("chronicles.authorCardTitle")}</p>
